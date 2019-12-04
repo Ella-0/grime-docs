@@ -1,3 +1,7 @@
 # The Grime Programming Language
 
-- [Chapter 1](./chapter_1.md)
+ - [## The Syntax](./README.md)
+ 	- [Syntax](./syntax.md)
+
+ - [## C Interopt](./c-interopt/README.md)
+	 - [Basics](./c-interopt/basics.md)

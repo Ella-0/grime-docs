@@ -3,9 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Grime Docs</title>
-        
-        <meta name="robots" content="noindex" />
+        <title>Syntax - Grime Docs</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -83,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> The Syntax</a></li><li><ol class="section"><li class="expanded "><a href="syntax.html"><strong aria-hidden="true">1.1.</strong> Syntax</a></li></ol></li><li class="expanded "><a href="c-interopt/index.html"><strong aria-hidden="true">2.</strong> C Interopt</a></li><li><ol class="section"><li class="expanded "><a href="c-interopt/basics.html"><strong aria-hidden="true">2.1.</strong> Basics</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> The Syntax</a></li><li><ol class="section"><li class="expanded "><a href="syntax.html" class="active"><strong aria-hidden="true">1.1.</strong> Syntax</a></li></ol></li><li class="expanded "><a href="c-interopt/index.html"><strong aria-hidden="true">2.</strong> C Interopt</a></li><li><ol class="section"><li class="expanded "><a href="c-interopt/basics.html"><strong aria-hidden="true">2.1.</strong> Basics</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -200,50 +198,21 @@ class NonEmptyStack&lt;T&gt; : Stack&lt;T&gt; {
 }
 </code></pre>
 <h2><a class="header" href="#operator-overloading" id="operator-overloading">Operator Overloading</a></h2>
-<h1><a class="header" href="#basics" id="basics">Basics</a></h1>
-<h2><a class="header" href="#functions-1" id="functions-1">Functions</a></h2>
-<p>Basic grime functions can easily be run in C and, if they are named correctly, in Grime. Grime can be configured to generate C headers as well as the Grime module outline files.</p>
-<pre><code class="language-grime">mod xyz.grime.example
-use xyz.grime.core.Int
-use xyz.grime.io.println
-
-func main() -&gt; Int {
-	println(&quot;Hello, World&quot;);
-	ret = 0;
-}
-
-</code></pre>
-<pre><code class="language-c">#include &lt;grime/core.h&gt;
-#include &lt;grime/io.h&gt;
-
-struct xyz_grime_core_Int *xyz_grime_example_main() {
-	struct xyz_grime_core_String _0 = _default_xyz_grime_core_String; // creates a struct with the default value (this has all of the function pointers)
-	struct xyz_grime_core_String *_0_ref = &amp;_0;
-	_0_ref-&gt;_init(_0_ref); // runs any of the initialisation needed by the string
-	_0_ref-&gt;_literal(_0_ref, &quot;Hello, World&quot;); // creates the string object from a char *, starts with `_` because this is managed by the compiler not the user;
-
-	xyz_grime_io_println(_0);
- 
-	struct xyz_grime_core_Int ret;
-	struct xyz_grime_core_Int *ret_ref = &amp;ret;
-	ret_ref-&gt;_init(ret_ref);
-	ret_ref-&gt;_literal(_0_ref, 0);
-	return ret_ref;
-}
-
-int main() {
-	struct xyz_grime_core_Int *ret = xyz_grime_example_main();
-	return ret-&gt;_c_val(ret); // function that gets the c integer value;
-}
-
-</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
+                        
+                            <a rel="next" href="c-interopt/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -253,7 +222,15 @@ int main() {
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
+                
+                    <a href="c-interopt/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
@@ -301,14 +278,6 @@ int main() {
         <!-- Custom JS scripts -->
         
 
-        
-        
-        <script type="text/javascript">
-        window.addEventListener('load', function() {
-            window.setTimeout(window.print, 100);
-        });
-        </script>
-        
         
 
     </body>
