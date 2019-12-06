@@ -1,6 +1,6 @@
 # Basics
 ## Functions
-Basic grime functions can easily be run in C and, if they are named correctly, in Grime. Grime can be configured to generate C headers as well as the Grime module outline files.
+Basic grime functions can easily be run in C and, if they are named correctly, in Grime. The Grime compiler can be configured to generate C headers as well as the Grime module outline files. This allows most programming languages with C interopt to call Grime code.
 ```grime
 mod xyz.grime.example
 use xyz.grime.core.Int
