@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Basics - Grime Docs</title>
+        <title>The Syntax - Grime Docs</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="../syntax/index.html"><strong aria-hidden="true">1.</strong> The Syntax</a></li><li><ol class="section"><li class="expanded "><a href="../syntax/classes-masks-enums.html"><strong aria-hidden="true">1.1.</strong> Classes Masks and Enums</a></li></ol></li><li class="expanded "><a href="../c-interopt/index.html"><strong aria-hidden="true">2.</strong> C Interopt</a></li><li><ol class="section"><li class="expanded "><a href="../c-interopt/basics.html" class="active"><strong aria-hidden="true">2.1.</strong> Basics</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="../syntax/index.html" class="active"><strong aria-hidden="true">1.</strong> The Syntax</a></li><li><ol class="section"><li class="expanded "><a href="../syntax/classes-masks-enums.html"><strong aria-hidden="true">1.1.</strong> Classes Masks and Enums</a></li></ol></li><li class="expanded "><a href="../c-interopt/index.html"><strong aria-hidden="true">2.</strong> C Interopt</a></li><li><ol class="section"><li class="expanded "><a href="../c-interopt/basics.html"><strong aria-hidden="true">2.1.</strong> Basics</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,71 +148,67 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#basics" id="basics">Basics</a></h1>
+                        <h1><a class="header" href="#syntax" id="syntax">Syntax</a></h1>
 <h2><a class="header" href="#functions" id="functions">Functions</a></h2>
-<p>Basic grime functions can easily be run in C and, if they are named correctly, in Grime. Grime can be configured to generate C headers as well as the Grime module outline files.</p>
-<pre><code class="language-grime">mod xyz.grime.example
-use xyz.grime.core.Int
-use xyz.grime.io.println
+<p>In Grime functions </p>
+<h2><a class="header" href="#the-entry-point" id="the-entry-point">The Entry Point</a></h2>
+<p>In Grime the entry point of a program is the main function.</p>
+<pre><code class="language-grime">use xyz.grime-lang.Int
 
 func main() -&gt; Int {
 	println(&quot;Hello, World&quot;);
-	ret = 0;
-}
-
-</code></pre>
-<pre><code class="language-c">#include &lt;grime/core.h&gt;
-#include &lt;grime/io.h&gt;
-
-struct xyz_grime_core_Int *xyz_grime_example_main() {
-	struct xyz_grime_core_String _0 = _default_xyz_grime_core_String; // creates a struct with the default value (this has all of the function pointers)
-	struct xyz_grime_core_String *_0_ref = &amp;_0;
-	_0_ref-&gt;_init(_0_ref); // runs any of the initialisation needed by the string
-	_0_ref-&gt;_literal(_0_ref, &quot;Hello, World&quot;); // creates the string object from a char *, starts with `_` because this is managed by the compiler not the user;
-
-	xyz_grime_io_println(_0);
- 
-	struct xyz_grime_core_Int ret;
-	struct xyz_grime_core_Int *ret_ref = &amp;ret;
-	ret_ref-&gt;_init(ret_ref);
-	ret_ref-&gt;_literal(_0_ref, 0);
-	return ret_ref;
-}
-
-int main() {
-	struct xyz_grime_core_Int *ret = xyz_grime_example_main();
-	return ret-&gt;_c_val(ret); // function that gets the c integer value;
-}
-
-</code></pre>
-<pre><code class="language-llvm">%xyz_grime_core_Int = type {
-	// Some detail has been omitted for simplicity such as super Classes, Masks and unused functions
-	%xyz_grime_core_Int*(%xyz_grime_core_Int*), ;1; _Init
-	%xyz_grime_core_Int*(%xyz_grime_core_Int*, i32), ;2; _literal
-	i32(%xyz_grime_core_Int*), ;0; _c_val
-}
-
-declare @xyz_grime_io_println(%xyz_grime_core_String*)
-
-define %xyz_grime_core_Int *@xyz_grime_example_main() {
-	
-}
-
-define i32 @main() {
-	
 }
 </code></pre>
+<h2><a class="header" href="#classes-masks" id="classes-masks">Classes, Masks</a></h2>
+<pre><code class="language-grime">mask Stack&lt;T&gt; {
+	val size: Int;
+	val pop: Stack&lt;T&gt;;
+	val peek: T;
+	func push(element: T) -&gt; Stack&lt;T&gt;;
+}
+
+class EmptyStack&lt;T&gt; : Stack&lt;T&gt; {
+	impl val depth: Int = 0;
+	impl val Pop: Stack&lt;T&gt; {
+		// Illegal State
+	}
+	impl func push(element: T) {
+		return NonEmptyStack&lt;T&gt;.create(this, element);
+	}
+}
+
+class NonEmptyStack&lt;T&gt; : Stack&lt;T&gt; {
+	impl val depth: Int;
+	impl val peek: T;
+
+	impl func push(element: T) {
+		return NonEmptyStack.create(this, element);
+	}
+
+	build create(tail: Stack&lt;T&gt;, head: T) {
+		pop = tail;
+		peek = head;
+		depth = tail.depth + 1;
+	}
+}
+</code></pre>
+<h2><a class="header" href="#enums" id="enums">Enums</a></h2>
+<pre><code class="language-grime">enum LogLevel {
+	LOG;
+}
+</code></pre>
+<h2><a class="header" href="#operator-overloading" id="operator-overloading">Operator Overloading</a></h2>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../c-interopt/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                                <i class="fa fa-angle-left"></i>
-                            </a>
-                        
 
+                        
+                            <a rel="next" href="../syntax/classes-masks-enums.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -222,11 +218,11 @@ define i32 @main() {
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="../c-interopt/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                
 
+                
+                    <a href="../syntax/classes-masks-enums.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 

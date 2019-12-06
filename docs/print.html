@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> The Syntax</a></li><li><ol class="section"><li class="expanded "><a href="syntax.html"><strong aria-hidden="true">1.1.</strong> Syntax</a></li></ol></li><li class="expanded "><a href="c-interopt/index.html"><strong aria-hidden="true">2.</strong> C Interopt</a></li><li><ol class="section"><li class="expanded "><a href="c-interopt/basics.html"><strong aria-hidden="true">2.1.</strong> Basics</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="syntax/index.html"><strong aria-hidden="true">1.</strong> The Syntax</a></li><li><ol class="section"><li class="expanded "><a href="syntax/classes-masks-enums.html"><strong aria-hidden="true">1.1.</strong> Classes Masks and Enums</a></li></ol></li><li class="expanded "><a href="c-interopt/index.html"><strong aria-hidden="true">2.</strong> C Interopt</a></li><li><ol class="section"><li class="expanded "><a href="c-interopt/basics.html"><strong aria-hidden="true">2.1.</strong> Basics</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -175,7 +175,7 @@ class EmptyStack&lt;T&gt; : Stack&lt;T&gt; {
 		// Illegal State
 	}
 	impl func push(element: T) {
-		return NonEmptyStack&lt;T&gt;.create(this, head);
+		return NonEmptyStack&lt;T&gt;.create(this, element);
 	}
 }
 
@@ -184,7 +184,7 @@ class NonEmptyStack&lt;T&gt; : Stack&lt;T&gt; {
 	impl val peek: T;
 
 	impl func push(element: T) {
-		return NonEmptyStack.create(this, head);
+		return NonEmptyStack.create(this, element);
 	}
 
 	build create(tail: Stack&lt;T&gt;, head: T) {
@@ -200,6 +200,7 @@ class NonEmptyStack&lt;T&gt; : Stack&lt;T&gt; {
 }
 </code></pre>
 <h2><a class="header" href="#operator-overloading" id="operator-overloading">Operator Overloading</a></h2>
+<h1><a class="header" href="#syntax-1" id="syntax-1">Syntax</a></h1>
 <h1><a class="header" href="#basics" id="basics">Basics</a></h1>
 <h2><a class="header" href="#functions-1" id="functions-1">Functions</a></h2>
 <p>Basic grime functions can easily be run in C and, if they are named correctly, in Grime. Grime can be configured to generate C headers as well as the Grime module outline files.</p>
@@ -236,6 +237,23 @@ int main() {
 	return ret-&gt;_c_val(ret); // function that gets the c integer value;
 }
 
+</code></pre>
+<pre><code class="language-llvm">%xyz_grime_core_Int = type {
+	// Some detail has been omitted for simplicity such as super Classes, Masks and unused functions
+	%xyz_grime_core_Int*(%xyz_grime_core_Int*), ;1; _Init
+	%xyz_grime_core_Int*(%xyz_grime_core_Int*, i32), ;2; _literal
+	i32(%xyz_grime_core_Int*), ;0; _c_val
+}
+
+declare @xyz_grime_io_println(%xyz_grime_core_String*)
+
+define %xyz_grime_core_Int *@xyz_grime_example_main() {
+	
+}
+
+define i32 @main() {
+	
+}
 </code></pre>
 
                     </main>

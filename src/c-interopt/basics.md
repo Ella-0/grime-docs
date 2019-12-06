@@ -38,3 +38,22 @@ int main() {
 }
 
 ```
+
+```llvm
+%xyz_grime_core_Int = type {
+	// Some detail has been omitted for simplicity such as super Classes, Masks and unused functions
+	%xyz_grime_core_Int*(%xyz_grime_core_Int*), ;1; _Init
+	%xyz_grime_core_Int*(%xyz_grime_core_Int*, i32), ;2; _literal
+	i32(%xyz_grime_core_Int*), ;0; _c_val
+}
+
+declare @xyz_grime_io_println(%xyz_grime_core_String*)
+
+define %xyz_grime_core_Int *@xyz_grime_example_main() {
+	
+}
+
+define i32 @main() {
+	
+}
+```
