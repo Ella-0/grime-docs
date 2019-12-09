@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="syntax/index.html"><strong aria-hidden="true">1.</strong> The Syntax</a></li><li><ol class="section"><li class="expanded "><a href="syntax/classes-masks-enums.html"><strong aria-hidden="true">1.1.</strong> Classes Masks and Enums</a></li></ol></li><li class="expanded "><a href="c-interopt/index.html"><strong aria-hidden="true">2.</strong> C Interopt</a></li><li><ol class="section"><li class="expanded "><a href="c-interopt/basics.html"><strong aria-hidden="true">2.1.</strong> Basics</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="syntax/index.html"><strong aria-hidden="true">1.</strong> The Syntax</a></li><li><ol class="section"><li class="expanded "><a href="syntax/classes-traits-enums.html"><strong aria-hidden="true">1.1.</strong> Classes Traits and Enums</a></li></ol></li><li class="expanded "><a href="c-interopt/index.html"><strong aria-hidden="true">2.</strong> C Interopt</a></li><li><ol class="section"><li class="expanded "><a href="c-interopt/basics.html"><strong aria-hidden="true">2.1.</strong> Basics</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -201,6 +201,109 @@ class NonEmptyStack&lt;T&gt; : Stack&lt;T&gt; {
 </code></pre>
 <h2><a class="header" href="#operator-overloading" id="operator-overloading">Operator Overloading</a></h2>
 <h1><a class="header" href="#syntax-1" id="syntax-1">Syntax</a></h1>
+<h2><a class="header" href="#" id=""></a></h2>
+<p>A class is defined with the following syntax</p>
+<pre><code class="language-grime">class MyClass {
+	
+}
+</code></pre>
+<h2><a class="header" href="#adding-fields" id="adding-fields">Adding Fields</a></h2>
+<pre><code class="language-grime">class MyClass {
+	var MyField: Int;
+}
+</code></pre>
+<h2><a class="header" href="#adding-methods" id="adding-methods">Adding Methods</a></h2>
+<p>A method can be added to a class using the following syntax.</p>
+<pre><code class="language-grime">class MyClass {
+	var myField: Int;
+
+	func myFunc(x: Int) -&gt; Int {
+		ret = myField + x;
+	}
+}
+</code></pre>
+<p>A method <strong>CAN NOT</strong> mutate any of the objects fields. The following code would not compile for that reason.</p>
+<pre><code class="language-grime">class MyClass {
+	var myField: Int;
+
+	func myFunc(x: Int) {
+		myField += x;
+	}
+}
+</code></pre>
+<h2><a class="header" href="#adding-a-constructor" id="adding-a-constructor">Adding a Constructor</a></h2>
+<p>Constructors are similar to methods except they can mutate the fields of an object. However, constructors delete all previous contents of an object. Constructors can be named or unnamed but there can only be one unnamed constructor per class.</p>
+<pre><code class="language-grime">class MyClass {
+	val myField: Int;
+	
+	build (val field: Int) {
+		myField = field;
+	}
+}
+</code></pre>
+<h3><a class="header" href="#adding-a-named-constructor" id="adding-a-named-constructor">Adding a Named Constructor</a></h3>
+<pre><code class="language-grime">class MyClass {
+	var myField: Int;
+	build create(val field: Int) {
+		myField = field;
+	}
+}
+</code></pre>
+<h3><a class="header" href="#extracting-methods-from-constructors" id="extracting-methods-from-constructors">Extracting Methods From Constructors</a></h3>
+<p>Constructors can call methods however these methods can not mutate the class unless specified using the following syntax.</p>
+<pre><code class="language-grime">class MyClass {
+	var myField: Int;
+	func myFunc(x: Int) -&gt; Int {
+		ret = myField + x;
+	}
+	mut func myMutFunc(x: Int) {
+		myField = x;
+	}
+	build (x: Int) {
+		myMutFunc(x);
+	}
+}
+</code></pre>
+<p>Normal methods <strong>CAN NOT</strong> call mutable methods.</p>
+<h2><a class="header" href="#traits" id="traits">Traits</a></h2>
+<p>Traits provide some pre-implemented methods, fields and constructors and some pre-defined methods, fields and constructors that must be implemented by a child class or trait. They are defined with the following syntax.</p>
+<pre><code class="language-grime">trait MyTrait {
+
+}
+</code></pre>
+<p>You can add a method, constructor or variable to a trait with the following syntax.</p>
+<pre><code class="language-grime">trait MyTrait {
+	var x: Int;
+	func myTraitFunc(x: Int) -&gt; Int;
+	build (y: Int);
+}
+</code></pre>
+<p>This method and constructor have not been implemented by the trait so it must be implemented by a child class or trait with the following syntax.</p>
+<pre><code>class MyClass : MyTrait {
+	impl func myTraitFunc(x: Int) -&gt; Int {
+		ret = x + 5;
+	}
+
+	impl build (x: Int) {
+		x = y;
+	}
+}
+</code></pre>
+<p>Fields <strong>DO NOT</strong> need to be implemented by a child class or trait as they have a default &quot;Getter, Setter&quot; implementation. They, along with methods and constructors with a default implementation, can still be implemented to override the default implementation. The &quot;Setter&quot; of a field <strong>CAN NOT</strong> be accessed outside constructors or methods that have been marked to mutate the object. The Setter of a field <strong>CAN NOT</strong> be overridden; because of the immutability of objects there is simply no need. A field's &quot;Getter&quot; can be implemented using the following syntax.</p>
+<pre><code class="language-grime">class MyClass : MyTrait {
+	impl var x: Int {
+		ret = x;
+	}
+}
+</code></pre>
+<h2><a class="header" href="#destructor" id="destructor">Destructor</a></h2>
+<p>A class can only have one destructor. This destructor is defined with the following syntax and is only ever called by the runtime not the programmer. It allows the programmer to do things like close files or clean up any unsafe memory that was being used when the object is garbage collected.</p>
+<pre><code>class MyClass : MyTrait {
+	demolish {
+		
+	}
+}
+</code></pre>
 <h1><a class="header" href="#basics" id="basics">Basics</a></h1>
 <h2><a class="header" href="#functions-1" id="functions-1">Functions</a></h2>
 <p>Basic grime functions can easily be run in C and, if they are named correctly, in Grime. The Grime compiler can be configured to generate C headers as well as the Grime module outline files. This allows most programming languages with C interopt to call Grime code.</p>
