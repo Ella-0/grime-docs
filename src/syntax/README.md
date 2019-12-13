@@ -7,7 +7,9 @@ In Grime functions
 In Grime the entry point of a program is the main function.
 
 ```grime
-use xyz.grime-lang.Int
+mod example::hello-world
+use std::core
+use std::io
 
 func main() -> Int {
 	println("Hello, World");
