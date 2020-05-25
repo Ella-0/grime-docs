@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The Syntax - Grime Docs</title>
+        <title>About - Grime Docs</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -80,8 +80,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="syntax/index.html"><strong aria-hidden="true">1.</strong> The Syntax</a></li><li><ol class="section"><li class="expanded "><a href="syntax/classes-traits-enums.html"><strong aria-hidden="true">1.1.</strong> Classes Traits and Enums</a></li></ol></li><li class="expanded "><a href="c-interopt/index.html"><strong aria-hidden="true">2.</strong> C Interopt</a></li><li><ol class="section"><li class="expanded "><a href="c-interopt/basics.html"><strong aria-hidden="true">2.1.</strong> Basics</a></li></ol></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html" class="active"><strong aria-hidden="true">1.</strong> About</a></li><li class="chapter-item expanded "><a href="syntax/index.html"><strong aria-hidden="true">2.</strong> The Syntax</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="syntax/classes-traits-enums.html"><strong aria-hidden="true">2.1.</strong> Classes Traits and Enums</a></li></ol></li><li class="chapter-item expanded "><a href="c-interopt/index.html"><strong aria-hidden="true">3.</strong> C Interopt</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c-interopt/basics.html"><strong aria-hidden="true">3.1.</strong> Basics</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -90,37 +90,36 @@
 
             <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
 
-                        <h1 class="menu-title">Grime Docs</h1>
+                    <h1 class="menu-title">Grime Docs</h1>
 
-                        <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                            
-                        </div>
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -148,58 +147,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#syntax" id="syntax">Syntax</a></h1>
-<h2><a class="header" href="#functions" id="functions">Functions</a></h2>
-<p>In Grime functions </p>
-<h2><a class="header" href="#the-entry-point" id="the-entry-point">The Entry Point</a></h2>
-<p>In Grime the entry point of a program is the main function.</p>
-<pre><code class="language-grime">mod example::hello-world
-use std::core
-use std::io
-
-func main() -&gt; Int {
-	println(&quot;Hello, World&quot;);
-}
-</code></pre>
-<h2><a class="header" href="#classes-masks" id="classes-masks">Classes, Masks</a></h2>
-<pre><code class="language-grime">mask Stack&lt;T&gt; {
-	val size: Int;
-	val pop: Stack&lt;T&gt;;
-	val peek: T;
-	func push(element: T) -&gt; Stack&lt;T&gt;;
-}
-
-class EmptyStack&lt;T&gt; : Stack&lt;T&gt; {
-	impl val depth: Int = 0;
-	impl val Pop: Stack&lt;T&gt; {
-		// Illegal State
-	}
-	impl func push(element: T) {
-		return NonEmptyStack&lt;T&gt;.create(this, element);
-	}
-}
-
-class NonEmptyStack&lt;T&gt; : Stack&lt;T&gt; {
-	impl val depth: Int;
-	impl val peek: T;
-
-	impl func push(element: T) {
-		return NonEmptyStack.create(this, element);
-	}
-
-	build create(tail: Stack&lt;T&gt;, head: T) {
-		pop = tail;
-		peek = head;
-		depth = tail.depth + 1;
-	}
-}
-</code></pre>
-<h2><a class="header" href="#enums" id="enums">Enums</a></h2>
-<pre><code class="language-grime">enum LogLevel {
-	LOG;
-}
-</code></pre>
-<h2><a class="header" href="#operator-overloading" id="operator-overloading">Operator Overloading</a></h2>
+                        <h1><a class="header" href="#about" id="about">About</a></h1>
+<p>The Grime Progamming lauguage is designed to be like C with a modern syntax</p>
 
                     </main>
 
@@ -208,7 +157,7 @@ class NonEmptyStack&lt;T&gt; : Stack&lt;T&gt; {
                         
 
                         
-                            <a rel="next" href="syntax/classes-traits-enums.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="syntax/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -222,7 +171,7 @@ class NonEmptyStack&lt;T&gt; : Stack&lt;T&gt; {
                 
 
                 
-                    <a href="syntax/classes-traits-enums.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="syntax/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -237,7 +186,7 @@ class NonEmptyStack&lt;T&gt; : Stack&lt;T&gt; {
             socket.onmessage = function (event) {
                 if (event.data === "reload") {
                     socket.close();
-                    location.reload(true); // force reload from server (not from cache)
+                    location.reload();
                 }
             };
 
