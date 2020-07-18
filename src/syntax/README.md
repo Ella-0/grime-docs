@@ -12,7 +12,7 @@ mod test::entry
 use func std::io::println
 
 func main() -> Int {
-	println("Hello, World");
+	println("Hello, World")
 }
 ```
 
@@ -27,14 +27,14 @@ use trait std::string::String // includes String trait
 use func std::io::println // includes the println function from std::io
 
 func main() -> Int {
-	val vec1 : [Float] = {1.0f, 6.0f, 3.0f}
-	val vec2 : [Float] = {3.0f, 4.0f, 2.0f}
-	val vec3 : [Float] = maths::dot3f(vec1, vec2)
+	val vec1 : [Float; 3] = {1.0f, 6.0f, 3.0f}
+	val vec2 : [Float; 3] = {3.0f, 4.0f, 2.0f}
+	val vec3 : [Float; 3] = maths::dot3f(vec1, vec2)
 
 	del vec1
 	del vec2
 
-	val out : [UByte] = String.formatCreate("({0}, {1}, {2})", vec3) // no string:: needed as trait included not mod
+	val out : [UByte] = String::formatCreate("({0}, {1}, {2})", vec3) // no string:: needed as trait included not mod
 	
 	del vec3
 

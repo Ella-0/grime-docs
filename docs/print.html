@@ -7,12 +7,19 @@
         
         <meta name="robots" content="noindex" />
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
@@ -21,8 +28,9 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -38,7 +46,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -83,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> About</a></li><li class="chapter-item expanded "><a href="syntax/index.html"><strong aria-hidden="true">2.</strong> The Syntax</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="syntax/classes-traits-enums.html"><strong aria-hidden="true">2.1.</strong> Classes Traits and Enums</a></li></ol></li><li class="chapter-item expanded "><a href="c-interopt/index.html"><strong aria-hidden="true">3.</strong> C Interopt</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c-interopt/basics.html"><strong aria-hidden="true">3.1.</strong> Basics</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> About</a></li><li class="chapter-item expanded "><a href="syntax/index.html"><strong aria-hidden="true">2.</strong> The Syntax</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="syntax/classes-traits-enums.html"><strong aria-hidden="true">2.1.</strong> Classes Traits and Enums</a></li></ol></li><li class="chapter-item expanded "><a href="c-interopt/index.html"><strong aria-hidden="true">3.</strong> C Interopt</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c-interopt/basics.html"><strong aria-hidden="true">3.1.</strong> Basics</a></li></ol></li><li class="chapter-item expanded "><a href="impl/index.html"><strong aria-hidden="true">4.</strong> The Implementation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="impl/type.html"><strong aria-hidden="true">4.1.</strong> Type System</a></li><li class="chapter-item expanded "><a href="impl/dyn.html"><strong aria-hidden="true">4.2.</strong> Dynamic Types</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -161,7 +169,7 @@
 use func std::io::println
 
 func main() -&gt; Int {
-	println(&quot;Hello, World&quot;);
+	println(&quot;Hello, World&quot;)
 }
 </code></pre>
 <h2><a class="header" href="#includes" id="includes">Includes</a></h2>
@@ -172,14 +180,14 @@ use trait std::string::String // includes String trait
 use func std::io::println // includes the println function from std::io
 
 func main() -&gt; Int {
-	val vec1 : [Float] = {1.0f, 6.0f, 3.0f}
-	val vec2 : [Float] = {3.0f, 4.0f, 2.0f}
-	val vec3 : [Float] = maths::dot3f(vec1, vec2)
+	val vec1 : [Float; 3] = {1.0f, 6.0f, 3.0f}
+	val vec2 : [Float; 3] = {3.0f, 4.0f, 2.0f}
+	val vec3 : [Float; 3] = maths::dot3f(vec1, vec2)
 
 	del vec1
 	del vec2
 
-	val out : [UByte] = String.formatCreate(&quot;({0}, {1}, {2})&quot;, vec3) // no string:: needed as trait included not mod
+	val out : [UByte] = String::formatCreate(&quot;({0}, {1}, {2})&quot;, vec3) // no string:: needed as trait included not mod
 	
 	del vec3
 
@@ -348,6 +356,123 @@ define i32 @main() {
 	
 }
 </code></pre>
+<h1><a class="header" href="#the-implementation" id="the-implementation">The Implementation</a></h1>
+<h2><a class="header" href="#type-system" id="type-system">Type System</a></h2>
+<p>The type system will need to keep track of several things:</p>
+<ul>
+<li>The type name</li>
+</ul>
+<h2><a class="header" href="#lifetime-checking" id="lifetime-checking">Lifetime checking</a></h2>
+<h1><a class="header" href="#type-system-1" id="type-system-1">Type System</a></h1>
+<p>The type system will need to keep track of several things.</p>
+<h2><a class="header" href="#the-type-name" id="the-type-name">The Type Name</a></h2>
+<p>This holds all of the basic type implementation and is used as a key for looking up functions
+for that specific type</p>
+<h2><a class="header" href="#the-lifetime" id="the-lifetime">The Lifetime</a></h2>
+<p>This is used to indentify the scope that a variable has which dictates when it will be dropped
+and where it can be used</p>
+<h2><a class="header" href="#ownership" id="ownership">Ownership</a></h2>
+<p>This is used to tell who owns the value and weather or not it has been moved</p>
+<h2><a class="header" href="#copy" id="copy">Copy</a></h2>
+<p>Weather or not it uses copy semantics or move semantics</p>
+<h2><a class="header" href="#implementation" id="implementation">Implementation</a></h2>
+<p>In the initial bootstrap compiler it will be implemented with something like this:</p>
+<pre><code class="language-c">struct Type {
+	struct ModId id;
+	struct ScopeId scope;
+	bool owns;
+	bool copyable;
+}
+</code></pre>
+<p>When selfhosting it will be implemented more like this</p>
+<pre><code class="language-grime">type ModId : U64
+
+type ScopeId : U64
+
+type Type : {
+	id: ModId,
+	scope: ScopeId,
+	owns: Bool,
+	copyable: Bool,
+}
+</code></pre>
+<h1><a class="header" href="#dynamic-types" id="dynamic-types">Dynamic Types</a></h1>
+<p>Dynamic types are required for doing things like generics
+and OOP like programming. In Grime they are implemented by
+using a simple vtable for every trait implementation.</p>
+<h2><a class="header" href="#source-representation" id="source-representation">Source Representation</a></h2>
+<p>In grime dynamic types are specified with a <code>dyn</code> keyword.</p>
+<pre><code class="language-grime">trait Shape {
+	func sides() -&gt; U32
+}
+
+type Polygon : {
+	sides: U32
+}
+
+impl Shape for Square {
+	func sides(&amp;self) -&gt; U32 {
+		ret := self.sides
+	}
+}
+
+func test() -&gt; U32 {
+	val polygon := Polygon {
+		10
+	}
+	val shape := polygon as dyn Shape
+
+	ret := shape.sides()
+}
+
+</code></pre>
+<h2><a class="header" href="#runtime-representation" id="runtime-representation">Runtime Representation</a></h2>
+<p>In Grime dynamic types are specified with the <code>dyn</code> keyword.
+it is represented as a vtable like the following</p>
+<pre><code class="language-c">// trait Shape
+struct _vtable_grime_test_Shape {
+	// a pointer to the actual data of an object on the stack
+	void *data;
+
+	// every function in a vtable is represented as a function pointer
+	uint32_t (*sides)(void *data);
+};
+
+struct _grime_test_Polygon {
+	uint32_t sides;
+}
+
+// impl Shape for Square {
+uint32_t _grime_test_Square_sides(struct _grime_test_Square *self) {
+	uint32_t ret = self-&gt;sides;
+	return ret;
+}
+
+struct _vtable_grime_test_Shape _impl_grime_test_Shape_grime_test_Square = {
+	NULL,
+	&amp;_grime_test_Square_sides
+}
+// }
+
+
+uint32_t _grime_test_test() {
+	uint32_t ret;
+
+	struct _grime_test_Polygon polygon = {
+		10
+	}
+	struct _vtable_grime_test_Shape shape = _impl_grime_test_Shape_grime_test_Square;
+	shape.data = &amp;_grime_test_Polygon;
+	
+	ret = shap.sides();
+	
+	return ret;
+}
+</code></pre>
+<h2><a class="header" href="#dropping" id="dropping">Dropping</a></h2>
+<p>When the value is dropped the data inside is not free'd as it is stack allocated and free'd later
+though the drop function for that object is called. We never need to heap alloc inside a vtable unless
+a subtype, like Vec, Box or Arc is used but this is handled by their drop functions.</p>
 
                     </main>
 
@@ -373,7 +498,7 @@ define i32 @main() {
         
         <!-- Livereload script (if served using the cli tool) -->
         <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3001");
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
             socket.onmessage = function (event) {
                 if (event.data === "reload") {
                     socket.close();
@@ -390,10 +515,10 @@ define i32 @main() {
         
 
         
-        
+
         
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
         
 

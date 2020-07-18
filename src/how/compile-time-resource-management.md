@@ -1,93 +1,97 @@
+# Compile Time Resource Management
 
-## Simple
 
 ```grime
 
-func main() -> [Int] {
-	val x: {Int} = {0, 1, 2, 3} // stack allocates array
-	val y: {Int} = {0, 1, 2, 3}
-	val z: [Int] = [0, 1, 2, 3] // heap allocates array
 
 
-	//x cleaned
-	//y cleaned
+fun abc(a: Copyable, b: NotCopyable, c: &Type) -> &Type {
+
+
+	a dropped here
+	b dropped here
+	c not dropped
 }
 
-```
+fun add(a: Int, b: Int) -> Int {
 
-```grime
-
-func main() -> [File] {
-	val x: [File] = [File::open("file1"), File::open("file2")]
-
-	
-}
-
-```
-
-```grime
-
-func take(x: [Int]) {
-
-}
-
-func borrow(x: {Int}) {
-
-}
-
-func test1() -> Int {
-
-	ret = 0
-
-	val x: [Int] := [1, 2, 3, 4]
-	take(x)
-	// x now cleaned
-	take(x) // fails use after clean but expected strong
-
-}
-
-func test2() -> Int {
-
-	val x: [Int] := [1, 2, 3, 4]
-
-	if (time > 1000) {
-		take(x)
-	}
-	take(x) // can't gaurentee x's existence
-
-	ret = 0
-}
-
-func test3() -> Int {
-
-	val x: [Int] := [1, 2, 3, 4]
-	val x: {Int} := {1, 2, 3, 4}
-
-	if (time > 1000) {
-		borrow(x)
-	}
-	take(x) // succeds; borrow doesn't free x
-
-	ret = 0
-}
-
-func test4() -> [Int] {
-	
 }
 
 ```
 
 
+```c
 
-```grime
+// return ref needs a point on the stack to return the value to
 
-impl Rope<T> {
-	build func main(
-		file0: File /*passes by copy*/, 
-		file1: [File] /*takes a boxed file and takes ownership. will clean up at end of construct or at obj destroy*/,
-		file2: {File} /*takes a boxed file and doesn't take ownership. will not clean up */) {
+// copyable structs can be passed by value
 
-	}
+// noncopyable are passed by refference and dropped as they are moved
+// but we don't copy the values inside them because that could be slow
+// depending on the size of the struct
+
+// values passed by refference are not dropped
+
+// Box values when dropped internally call free()
+
+struct Type *ret abc(struct Type *ret, struct Copyable *a, struct NotCopyable *b, struct Type *c) {
+
+
+	drop(a);
+	drop(b);
+	// c is not dropped
+	return ret; // return the reference to make expr evaluation easier
 }
+
+```
+
+```llvm
+define i32 _grime_add(i32 %0, i32 %1) {
+entry:
+	%2 = add %0, %1
+	ret %2
+}
+
+
+```
+
+```c
+struct _grime_std_Box {
+	struct _grime_dyn *mem,
+};
+
+struct _grime_std_Box _grime_std_Box_new(struct _grime_dyn value) {
+	struct _grime_std_Box ret = {
+		malloc(value.size)
+	};
+	*ret.mem = value;
+}
+
+struct _grime_std_Vec {
+	size_t count;
+	struct _grime_dyn *mem;
+};
+
+void _grime_std_Box_grime_std_Drop_drop(struct _grime_std_Box *self) {
+	free(self->mem);
+}
+
+struct _grime_std_Vec _grime_std_Vec_new(struct _grime_dyn value) {
+	return {
+		0,
+		NULL,
+	};
+}
+
+struct _grime_std_Vec_push(struct _grime_std_Vec *self, struct _grime_dyn value) {
+	self->mem = realloc((self->count + 1) * value.size)
+	self->mem[self->count] = value;
+	self->count++;
+}
+
+void _grime_std_Vec_grime_std_Drop_drop(struct _grime_std_Vec *self) {
+	free(self->mem);
+}
+
 
 ```
