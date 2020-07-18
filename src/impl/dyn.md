@@ -69,10 +69,11 @@ uint32_t _grime_test_test() {
 		10
 	}
 	struct _vtable_grime_test_Shape shape = _impl_grime_test_Shape_grime_test_Square;
-	shape.data = &_grime_test_Polygon;
+	shape.data = &_grime_test_Polygon; // polygon moved to shape
 	
 	ret = shap.sides();
 	
+	// we only drop shape here not polygon because polygon was moved to shape
 	return ret;
 }
 ```
